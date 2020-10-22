@@ -1,0 +1,4 @@
+[
+    "function migrateFromLEND(uint256 amount) external",
+    "function migrationStarted() external view returns(bool)"
+]
