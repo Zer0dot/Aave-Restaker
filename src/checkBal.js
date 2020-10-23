@@ -1,5 +1,7 @@
 const ethers = require('ethers');
 const { mnemonicPhrase, projectId } = require('../secrets.json');
+const erc20Abi = require('./ABI/erc20.abi.json');
+const aaveAddress = '0x507f9d08b634783b808d7c70e8de3146d69ac8d7';
 
 async function main() {
     const provider = new ethers.providers.InfuraProvider("kovan", projectId);
@@ -11,6 +13,11 @@ async function main() {
     console.log("Eth value of FF account:", ethers.utils.formatEther(ffValue));
     console.log("Address of old acc:", account.address);
     
+    const aave = new ethers.Contract(aaveAddress, erc20Abi, account);
+
+    const aaveBal = await aave.balanceOf(account.address);
+
+    console.log("AAVE balance on old acc:", ethers.utils.formatEther(aaveBal));
 }
 
 main();
