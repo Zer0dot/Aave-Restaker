@@ -1,7 +1,7 @@
 {
   "manifestVersion": "2.2",
   "contracts": {
-    "AaveRestake": "AaveRestake"
+    "AaveRestaker": "AaveRestaker"
   },
   "dependencies": {
     "@openzeppelin/contracts-ethereum-package": "^3.0.0"

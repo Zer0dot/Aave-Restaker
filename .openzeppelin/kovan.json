@@ -1,11 +1,11 @@
 {
   "contracts": {
-    "AaveRestake": {
-      "address": "0x167596a7755b7bA98B67FEBeBF973bDDa235Fba9",
-      "constructorCode": "608060405234801561001057600080fd5b506119d2806100206000396000f3fe",
-      "bodyBytecodeHash": "6f0dc67eb0ac8a3ceba8b8db93568ee47bae0e1d9869462e8e2fe1a9fb9c37b7",
-      "localBytecodeHash": "ba6da457953f173d960c116918dbc7010eff365b8974468d40102cb0a0591393",
-      "deployedBytecodeHash": "ba6da457953f173d960c116918dbc7010eff365b8974468d40102cb0a0591393",
+    "AaveRestaker": {
+      "address": "0xd4BCA10BB69B30Dc867E87679b1c27d9fb9dAD8c",
+      "constructorCode": "608060405234801561001057600080fd5b50611a63806100206000396000f3fe",
+      "bodyBytecodeHash": "985c2d71dab9a79783b85949b50001801a94eff0a1021211209e89c17540da94",
+      "localBytecodeHash": "dc3c9c1452f505ac794e871f5a173df9348c957cb012e06180a36b0c8fd37021",
+      "deployedBytecodeHash": "dc3c9c1452f505ac794e871f5a173df9348c957cb012e06180a36b0c8fd37021",
       "types": {
         "t_bool": {
           "id": "t_bool",
@@ -62,84 +62,76 @@
           "src": "1982:29:4"
         },
         {
-          "contract": "AaveRestake",
-          "path": "contracts/AaveRestake.sol",
+          "contract": "AaveRestaker",
+          "path": "contracts/AaveRestaker.sol",
           "label": "stkAaveAddress",
           "astId": 656,
           "type": "t_address",
-          "src": "2601:30:5"
+          "src": "435:30:5"
         },
         {
-          "contract": "AaveRestake",
-          "path": "contracts/AaveRestake.sol",
-          "label": "stkAaveStaker",
+          "contract": "AaveRestaker",
+          "path": "contracts/AaveRestaker.sol",
+          "label": "stkAave",
           "astId": 658,
           "type": "t_address",
-          "src": "2667:25:5"
+          "src": "501:20:5"
         },
         {
-          "contract": "AaveRestake",
-          "path": "contracts/AaveRestake.sol",
-          "label": "stkAave",
+          "contract": "AaveRestaker",
+          "path": "contracts/AaveRestaker.sol",
+          "label": "aaveAddress",
           "astId": 660,
           "type": "t_address",
-          "src": "2743:14:5"
+          "src": "569:27:5"
         },
         {
-          "contract": "AaveRestake",
-          "path": "contracts/AaveRestake.sol",
-          "label": "aaveAddress",
+          "contract": "AaveRestaker",
+          "path": "contracts/AaveRestaker.sol",
+          "label": "aave",
           "astId": 662,
           "type": "t_address",
-          "src": "2817:27:5"
+          "src": "632:11:5"
         },
         {
-          "contract": "AaveRestake",
-          "path": "contracts/AaveRestake.sol",
-          "label": "aave",
-          "astId": 664,
-          "type": "t_address",
-          "src": "2880:11:5"
-        },
-        {
-          "contract": "AaveRestake",
-          "path": "contracts/AaveRestake.sol",
+          "contract": "AaveRestaker",
+          "path": "contracts/AaveRestaker.sol",
           "label": "totalStkAave",
+          "astId": 664,
+          "type": "t_uint256",
+          "src": "697:20:5"
+        },
+        {
+          "contract": "AaveRestaker",
+          "path": "contracts/AaveRestaker.sol",
+          "label": "poolRewards",
           "astId": 666,
           "type": "t_uint256",
-          "src": "2945:20:5"
+          "src": "766:19:5"
         },
         {
-          "contract": "AaveRestake",
-          "path": "contracts/AaveRestake.sol",
-          "label": "poolRewards",
-          "astId": 668,
-          "type": "t_uint256",
-          "src": "3014:19:5"
-        },
-        {
-          "contract": "AaveRestake",
-          "path": "contracts/AaveRestake.sol",
+          "contract": "AaveRestaker",
+          "path": "contracts/AaveRestaker.sol",
           "label": "shares",
-          "astId": 672,
+          "astId": 670,
           "type": "t_mapping<t_uint256>",
-          "src": "3092:41:5"
+          "src": "844:41:5"
         },
         {
-          "contract": "AaveRestake",
-          "path": "contracts/AaveRestake.sol",
+          "contract": "AaveRestaker",
+          "path": "contracts/AaveRestaker.sol",
           "label": "totalShares",
+          "astId": 672,
+          "type": "t_uint256",
+          "src": "927:19:5"
+        },
+        {
+          "contract": "AaveRestaker",
+          "path": "contracts/AaveRestaker.sol",
+          "label": "maxInt",
           "astId": 674,
           "type": "t_uint256",
-          "src": "3175:19:5"
-        },
-        {
-          "contract": "AaveRestake",
-          "path": "contracts/AaveRestake.sol",
-          "label": "maxInt",
-          "astId": 676,
-          "type": "t_uint256",
-          "src": "3264:14:5"
+          "src": "1016:14:5"
         }
       ],
       "warnings": {
@@ -155,9 +147,23 @@
   "proxies": {
     "aave-restaker/AaveRestake": [
       {
-        "address": "0xc54Ba86eA320B92761aA5A31A3ED759B958947cB",
+        "address": "0xF04ECB72fDa2eB6CEb279E7872C62723bbC2a039",
         "version": "1.0.0",
-        "implementation": "0x167596a7755b7bA98B67FEBeBF973bDDa235Fba9",
+        "implementation": "0x0c7217e4D2402C69A53523DD2bdc262ceF97b534",
+        "admin": "0x98C5f12Dbe1aF8880E498e5d53D32D889d1A1325",
+        "kind": "Upgradeable"
+      },
+      {
+        "address": "0x9945A51c112dCd394d4D31bDAf8ADe406A0Ea07A",
+        "kind": "NonProxy",
+        "bytecodeHash": "ddd6130f2fc3703475d84b621cc842d1ea0be93cb9b90b039da13c69b0cae10e"
+      }
+    ],
+    "aave-restaker/AaveRestaker": [
+      {
+        "address": "0xB16BaA6bd8fb164C2e821F560d82308497EFA4e9",
+        "version": "1.0.0",
+        "implementation": "0xd4BCA10BB69B30Dc867E87679b1c27d9fb9dAD8c",
         "admin": "0x98C5f12Dbe1aF8880E498e5d53D32D889d1A1325",
         "kind": "Upgradeable"
       }

@@ -1,13 +1,10 @@
-//SPDX-License-Identifier: MIT
-
 pragma solidity 0.6.12;
 
-import "./interfaces/IStakedToken.sol";
-import "@openzeppelin/upgrades/contracts/Initializable.sol";
-import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/SafeERC20.sol";
-import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
 
-contract AaveRestake is Initializable {
+
+
+
+contract AaveRestaker is Initializable {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 
@@ -25,7 +22,7 @@ contract AaveRestake is Initializable {
         stkAaveAddress = address(0xf2fbf9A6710AfDa1c4AaB2E922DE9D69E0C97fd2);   //Kovan proxy
         stkAave = IStakedToken(stkAaveAddress);
 
-        aaveAddress = address(0x507F9D08B634783b808d7C70E8dE3146D69Ac8d7);      //Kovan proxy
+        aaveAddress = address(0xB597cd8D3217ea6477232F9217fa70837ff667Af);      //Kovan proxy
         aave = IERC20(aaveAddress);
 
         totalShares = 0;
@@ -45,23 +42,22 @@ contract AaveRestake is Initializable {
     //Then transfer in the caller's AAVE and stake it
     function deposit(uint256 amount) external {
         updateStkAave();
-        require(aave.allowance(msg.sender, address(this)) >= amount, "Insufficient allowance.");
         aave.safeTransferFrom(msg.sender, address(this), amount);
         stkAave.stake(address(this), amount);
 
         //Initialize the user's shares to mint and calculate the appropriate amount
-        /*uint256 sharesToMint = 0;
+        uint256 sharesToMint = 0;
         if (totalStkAave > 0 && totalShares > 0) {
             sharesToMint = amount.div(totalStkAave).mul(totalShares);
         } else if (totalStkAave == 0 && totalShares == 0) {
             sharesToMint = amount;
         }
         require(sharesToMint >= 0, "No shares to mint.");
-        
+
         //Assign shares to depositor and update state variables
         shares[msg.sender] = sharesToMint;
-        totalShares.add(sharesToMint);
-        updateStkAave();*/
+        totalShares = totalShares.add(shares[msg.sender]); //Something here isn't working. totalShares remains at 0.
+        updateStkAave();
     }
 
     //Check total pool pending AAVE rewards
@@ -93,8 +89,8 @@ contract AaveRestake is Initializable {
         bool success = stkAave.transfer(msg.sender, stkAaveToWithdraw);
 
         if (success) {
-            totalShares.sub(shareCount);
-            shares[msg.sender].sub(shareCount);
+            totalShares = totalShares.sub(shareCount);
+            shares[msg.sender] = shares[msg.sender].sub(shareCount);
             updateStkAave();
         } else {
             revert("Transfer failed.");
@@ -112,8 +108,15 @@ contract AaveRestake is Initializable {
         return totalShares;
     }
 
-    function testAdd() external view returns (uint256) {
+    /*function testAdd(uint256 amount) external pure returns (uint256) {
         //return stkAave.balanceOf(msg.sender);
-        return aave.allowance(address(this), address(stkAave));
+        uint256 a = 0;
+        a = a.add(amount);
+        
+        return a;
+        //return aave.allowance(address(this), address(stkAave));
+    }*/
+
+    function getStkAavePoolBalance() external view returns (uint256) {
+        return totalStkAave;
     }
-}

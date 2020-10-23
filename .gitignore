@@ -114,3 +114,5 @@ plan.sol
 \build
 
 package-lock.json
+
+addresses.txt
