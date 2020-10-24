@@ -1,11 +1,11 @@
 {
   "contracts": {
     "AaveRestaker": {
-      "address": "0xd4BCA10BB69B30Dc867E87679b1c27d9fb9dAD8c",
-      "constructorCode": "608060405234801561001057600080fd5b50611a63806100206000396000f3fe",
-      "bodyBytecodeHash": "985c2d71dab9a79783b85949b50001801a94eff0a1021211209e89c17540da94",
-      "localBytecodeHash": "dc3c9c1452f505ac794e871f5a173df9348c957cb012e06180a36b0c8fd37021",
-      "deployedBytecodeHash": "dc3c9c1452f505ac794e871f5a173df9348c957cb012e06180a36b0c8fd37021",
+      "address": "0xA19ef5bFF575C7c755F3DA9FB5AFddC51501B93a",
+      "constructorCode": "608060405234801561001057600080fd5b50612eea806100206000396000f3fe",
+      "bodyBytecodeHash": "f6712968ef88e62e7b7c53409d3f29d9ebf694025aabffb5e4a0c5cd5827a7ec",
+      "localBytecodeHash": "e03645aa19891f647e0663ead485906016c024bbbf4c5bd93ca6bd1df192ebe9",
+      "deployedBytecodeHash": "e03645aa19891f647e0663ead485906016c024bbbf4c5bd93ca6bd1df192ebe9",
       "types": {
         "t_bool": {
           "id": "t_bool",
@@ -24,114 +24,187 @@
           "kind": "array",
           "label": "uint256[50]"
         },
-        "t_address": {
-          "id": "t_address",
-          "kind": "elementary",
-          "label": "address"
-        },
         "t_mapping<t_uint256>": {
           "id": "t_mapping<t_uint256>",
           "valueType": "t_uint256",
           "label": "mapping(key => uint256)",
           "kind": "mapping"
+        },
+        "t_string": {
+          "id": "t_string",
+          "kind": "elementary",
+          "label": "string"
+        },
+        "t_uint8": {
+          "id": "t_uint8",
+          "kind": "elementary",
+          "label": "uint8"
+        },
+        "t_array:44<t_uint256>": {
+          "id": "t_array:44<t_uint256>",
+          "valueType": "t_uint256",
+          "length": "44",
+          "kind": "array",
+          "label": "uint256[44]"
+        },
+        "t_address": {
+          "id": "t_address",
+          "kind": "elementary",
+          "label": "address"
         }
       },
       "storage": [
         {
           "contract": "Initializable",
-          "path": "@openzeppelin/upgrades/contracts/Initializable.sol",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol",
           "label": "initialized",
-          "astId": 571,
+          "astId": 50,
           "type": "t_bool",
-          "src": "757:24:4"
+          "src": "757:24:1"
         },
         {
           "contract": "Initializable",
-          "path": "@openzeppelin/upgrades/contracts/Initializable.sol",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol",
           "label": "initializing",
-          "astId": 574,
+          "astId": 53,
           "type": "t_bool",
-          "src": "876:25:4"
+          "src": "876:25:1"
         },
         {
           "contract": "Initializable",
-          "path": "@openzeppelin/upgrades/contracts/Initializable.sol",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol",
           "label": "______gap",
-          "astId": 639,
+          "astId": 118,
           "type": "t_array:50<t_uint256>",
-          "src": "1982:29:4"
+          "src": "1982:29:1"
+        },
+        {
+          "contract": "ContextUpgradeSafe",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/GSN/Context.sol",
+          "label": "__gap",
+          "astId": 43,
+          "type": "t_array:50<t_uint256>",
+          "src": "1277:25:0"
+        },
+        {
+          "contract": "ERC20UpgradeSafe",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20.sol",
+          "label": "_balances",
+          "astId": 339,
+          "type": "t_mapping<t_uint256>",
+          "src": "1481:46:3"
+        },
+        {
+          "contract": "ERC20UpgradeSafe",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20.sol",
+          "label": "_allowances",
+          "astId": 345,
+          "type": "t_mapping<t_uint256>",
+          "src": "1534:69:3"
+        },
+        {
+          "contract": "ERC20UpgradeSafe",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20.sol",
+          "label": "_totalSupply",
+          "astId": 347,
+          "type": "t_uint256",
+          "src": "1610:28:3"
+        },
+        {
+          "contract": "ERC20UpgradeSafe",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20.sol",
+          "label": "_name",
+          "astId": 349,
+          "type": "t_string",
+          "src": "1645:20:3"
+        },
+        {
+          "contract": "ERC20UpgradeSafe",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20.sol",
+          "label": "_symbol",
+          "astId": 351,
+          "type": "t_string",
+          "src": "1671:22:3"
+        },
+        {
+          "contract": "ERC20UpgradeSafe",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20.sol",
+          "label": "_decimals",
+          "astId": 353,
+          "type": "t_uint8",
+          "src": "1699:23:3"
+        },
+        {
+          "contract": "ERC20UpgradeSafe",
+          "path": "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20.sol",
+          "label": "__gap",
+          "astId": 848,
+          "type": "t_array:44<t_uint256>",
+          "src": "11045:25:3"
         },
         {
           "contract": "AaveRestaker",
           "path": "contracts/AaveRestaker.sol",
           "label": "stkAaveAddress",
-          "astId": 656,
+          "astId": 1237,
           "type": "t_address",
-          "src": "435:30:5"
+          "src": "542:30:7"
         },
         {
           "contract": "AaveRestaker",
           "path": "contracts/AaveRestaker.sol",
           "label": "stkAave",
-          "astId": 658,
+          "astId": 1239,
           "type": "t_address",
-          "src": "501:20:5"
+          "src": "617:20:7"
         },
         {
           "contract": "AaveRestaker",
           "path": "contracts/AaveRestaker.sol",
           "label": "aaveAddress",
-          "astId": 660,
+          "astId": 1241,
           "type": "t_address",
-          "src": "569:27:5"
+          "src": "694:27:7"
         },
         {
           "contract": "AaveRestaker",
           "path": "contracts/AaveRestaker.sol",
           "label": "aave",
-          "astId": 662,
+          "astId": 1243,
           "type": "t_address",
-          "src": "632:11:5"
+          "src": "766:11:7"
         },
         {
           "contract": "AaveRestaker",
           "path": "contracts/AaveRestaker.sol",
           "label": "totalStkAave",
-          "astId": 664,
+          "astId": 1245,
           "type": "t_uint256",
-          "src": "697:20:5"
+          "src": "840:20:7"
         },
         {
           "contract": "AaveRestaker",
           "path": "contracts/AaveRestaker.sol",
           "label": "poolRewards",
-          "astId": 666,
+          "astId": 1247,
           "type": "t_uint256",
-          "src": "766:19:5"
-        },
-        {
-          "contract": "AaveRestaker",
-          "path": "contracts/AaveRestaker.sol",
-          "label": "shares",
-          "astId": 670,
-          "type": "t_mapping<t_uint256>",
-          "src": "844:41:5"
+          "src": "918:19:7"
         },
         {
           "contract": "AaveRestaker",
           "path": "contracts/AaveRestaker.sol",
           "label": "totalShares",
-          "astId": 672,
+          "astId": 1249,
           "type": "t_uint256",
-          "src": "927:19:5"
+          "src": "1099:19:7"
         },
         {
           "contract": "AaveRestaker",
           "path": "contracts/AaveRestaker.sol",
           "label": "maxInt",
-          "astId": 674,
+          "astId": 1251,
           "type": "t_uint256",
-          "src": "1016:14:5"
+          "src": "1197:14:7"
         }
       ],
       "warnings": {
@@ -145,25 +218,11 @@
   },
   "solidityLibs": {},
   "proxies": {
-    "aave-restaker/AaveRestake": [
-      {
-        "address": "0xF04ECB72fDa2eB6CEb279E7872C62723bbC2a039",
-        "version": "1.0.0",
-        "implementation": "0x0c7217e4D2402C69A53523DD2bdc262ceF97b534",
-        "admin": "0x98C5f12Dbe1aF8880E498e5d53D32D889d1A1325",
-        "kind": "Upgradeable"
-      },
-      {
-        "address": "0x9945A51c112dCd394d4D31bDAf8ADe406A0Ea07A",
-        "kind": "NonProxy",
-        "bytecodeHash": "ddd6130f2fc3703475d84b621cc842d1ea0be93cb9b90b039da13c69b0cae10e"
-      }
-    ],
     "aave-restaker/AaveRestaker": [
       {
-        "address": "0xB16BaA6bd8fb164C2e821F560d82308497EFA4e9",
+        "address": "0x93257a4d106841bf95eE27606137a7cDce298807",
         "version": "1.0.0",
-        "implementation": "0xd4BCA10BB69B30Dc867E87679b1c27d9fb9dAD8c",
+        "implementation": "0xA19ef5bFF575C7c755F3DA9FB5AFddC51501B93a",
         "admin": "0x98C5f12Dbe1aF8880E498e5d53D32D889d1A1325",
         "kind": "Upgradeable"
       }
