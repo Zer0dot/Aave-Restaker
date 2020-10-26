@@ -92,6 +92,7 @@ contract AaveRestaker is ERC20 {
 
     //Returns the user's stkAAVE balance in the pool
     function stkAaveBalanceOf(address query) external view returns (uint256) {
+        require(balanceOf(query) > 0, "Queried address has no shares.");
         uint256 userStkAaveBalance = balanceOf(query).mul(totalStkAave).div(totalShares);
         return userStkAaveBalance;
     }

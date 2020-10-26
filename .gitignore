@@ -109,10 +109,12 @@ secrets.json
 
 plan.sol
 
-\src
+src/
 
-\build
+build/
 
 package-lock.json
 
 addresses.txt
+
+bin/
