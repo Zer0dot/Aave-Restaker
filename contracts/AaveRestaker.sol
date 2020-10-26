@@ -46,11 +46,11 @@ contract AaveRestaker is ERC20 {
         //Initialize the user's shares to mint and calculate the appropriate amount
         uint256 sharesToMint = 0;
         if (totalStkAave > 0 && totalShares > 0) {
-            sharesToMint = amount.div(totalStkAave).mul(totalShares);
+            sharesToMint = amount.mul(totalShares).div(totalStkAave);
         } else if (totalStkAave == 0 && totalShares == 0) {
             sharesToMint = amount;
         }
-        require(sharesToMint >= 0, "No shares to mint.");
+        require(sharesToMint > 0, "No shares to mint.");
 
         //Assign shares to depositor and update state variables
         _mint(msg.sender, sharesToMint);
@@ -82,7 +82,7 @@ contract AaveRestaker is ERC20 {
         uint256 userShareCount = balanceOf(msg.sender);
         require(userShareCount > 0, "No pool ownership.");
         require(shareCount <= userShareCount, "Cannot withdraw more than what is owned.");
-        uint256 stkAaveToWithdraw = shareCount.div(totalShares).mul(totalStkAave);
+        uint256 stkAaveToWithdraw = shareCount.mul(totalStkAave).div(totalShares);
         bool success = stkAave.transfer(msg.sender, stkAaveToWithdraw);
 
         require(success, "Transfer failed.");
