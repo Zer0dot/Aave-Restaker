@@ -8,16 +8,29 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
 contract AaveRestaker is ERC20 {
     using SafeERC20 for IERC20;
+    using SafeERC20 for IStakedToken;
     using SafeMath for uint256;
 
-    IStakedToken stkAave;                           //stkAAVE interface
-    IERC20 aave;                                    //AAVE interface                        
-    uint256 public totalStkAave;                    //Total pool stkAAVE
-    uint256 public poolRewards;                     //Total pool rewards to claim
-    uint256 public totalShares;                     //Total pool shares
+    address public manager;                 //Strategist address (where the fees go)
+    IStakedToken stkAave;                   //stkAAVE interface
+    IERC20 aave;                            //AAVE interface                        
+    uint256 public totalStkAave;            //Total pool stkAAVE
+    uint256 public poolRewards;             //Total pool rewards to claim
+    uint256 public totalShares;             //Total pool shares
+    uint256 public fee;                     //Current fee in bps (1 = 0.01%) (Charged on compounding ONLY)
+    /*
+    REMOVED MAX FEE, REASON: There is no need for a fee cap, 
+    the fee is public and only charged upon compounding.
+    Thus, no losses can occur for holders. Should the manager become a DAO,
+    it is encouraged that fees be thoroughly calculated to maintain
+    profitability over simply non-compounding stkAAVE.
+    uint256 public maxFee;                  //Max fee in bps
+    */
+
+    
 
     //Initialize variables and approve stkAave
-    constructor(address stkAaveAddress, address aaveAddress) ERC20("Pool-Staked AAVE", "pStkAAVE") public {
+    constructor(address stkAaveAddress, address aaveAddress, uint256 _fee, address _manager) ERC20("Pool-Staked AAVE", "pStkAAVE") public {
         stkAave = IStakedToken(stkAaveAddress);
         aave = IERC20(aaveAddress);
         
@@ -26,7 +39,34 @@ contract AaveRestaker is ERC20 {
         poolRewards = 0;
         uint256 maxInt = uint256(-1);
 
+        fee = _fee;
+        manager = _manager;
+
         aave.safeApprove(address(stkAave), maxInt);
+    }
+
+    event Deposit(
+        address indexed _from,
+        uint256 _value
+    );
+
+    event ClaimAndStake(
+        uint256 _value,
+        uint256 _fee
+    );
+
+    event Withdraw(
+        address indexed _from,
+        uint256 _shares
+    );
+
+    event FeeChanged(
+        uint256 _newFee
+    );
+
+    modifier onlyManager {
+        require(msg.sender == manager, "Only the manager can call this function.");
+        _;
     }
 
     //Updates pool balances
@@ -54,7 +94,9 @@ contract AaveRestaker is ERC20 {
 
         //Assign shares to depositor and update state variables
         _mint(msg.sender, sharesToMint);
+
         updateStkAaveAndShares();
+        emit Deposit(msg.sender, amount);
     }
 
     //Check total pool pending AAVE rewards
@@ -63,14 +105,22 @@ contract AaveRestaker is ERC20 {
     }
 
     //Claims and re-invests AAVE rewards, then update the pool's total stkAAVE
-    function claimAndStake() external {
+    function claimAndStake() external onlyManager {
         stkAave.claimRewards(address(this), uint(-1));
         uint256 aaveBalance = aave.balanceOf(address(this));
-
         require(aaveBalance > 0, "Cannot stake 0 tokens.");
+
+        //Calculate fee
+        uint256 aaveFee = aaveBalance.mul(fee).div(10000);
+        
+        //Transfer AAVE fee
+        aave.safeTransfer(manager, aaveFee);
+
+        //Stake AAVE
         stkAave.stake(address(this), aaveBalance);
 
         updateStkAaveAndShares();
+        emit ClaimAndStake(aaveBalance, aaveFee);
     }
 
     //Withdraws a set amount of shares to transfer stkAAVE back to the user
@@ -81,13 +131,14 @@ contract AaveRestaker is ERC20 {
         updateStkAaveAndShares(); //Security
         uint256 userShareCount = balanceOf(msg.sender);
         require(userShareCount > 0, "No pool ownership.");
-        require(shareCount <= userShareCount, "Cannot withdraw more than what is owned.");
+        shareCount = shareCount > userShareCount ? userShareCount : shareCount; 
         uint256 stkAaveToWithdraw = shareCount.mul(totalStkAave).div(totalShares);
-        bool success = stkAave.transfer(msg.sender, stkAaveToWithdraw);
 
-        require(success, "Transfer failed.");
         _burn(msg.sender, shareCount);
+        stkAave.safeTransfer(msg.sender, stkAaveToWithdraw);
+
         updateStkAaveAndShares();
+        emit Withdraw(msg.sender, shareCount);
     }
 
     //Returns the user's stkAAVE balance in the pool
@@ -95,5 +146,14 @@ contract AaveRestaker is ERC20 {
         require(balanceOf(query) > 0, "Queried address has no shares.");
         uint256 userStkAaveBalance = balanceOf(query).mul(totalStkAave).div(totalShares);
         return userStkAaveBalance;
+    }
+
+    function transferManager(address target) external onlyManager {
+        manager = target;
+    }
+
+    function changeFeeBps(uint256 newFee) external onlyManager {
+        fee = newFee;
+        emit FeeChanged(newFee);
     }
 }
